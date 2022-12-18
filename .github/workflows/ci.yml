@@ -45,14 +45,15 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
       - run: RUSTDOCFLAGS="-D warnings" cargo doc
 
-  # clippy:
-  #   name: Clippy
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: dtolnay/rust-toolchain@stable
-  #       with:
-  #         components: clippy
+  clippy:
+    name: Clippy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
+      - run: cargo clippy --all-targets --all-features -- -D warnings
 
   format:
     name: Cargo Fmt
