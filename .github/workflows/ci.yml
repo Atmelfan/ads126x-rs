@@ -16,66 +16,50 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-      - run: RUSTFLAGS="-D warnings" cargo build
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo build
 
   examples:
     name: Cargo Examples
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
+      - uses: dtolnay/rust-toolchain@stable
       - run: |
-          RUSTFLAGS="-D warnings" cargo build --examples
+          cargo build --examples
 
   test:
     name: Cargo Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
+      - uses: dtolnay/rust-toolchain@stable
       - run: |
-          RUSTFLAGS="-D warnings" cargo build --examples
+          cargo build --examples
 
   doc:
     name: Cargo Doc
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
+      - uses: dtolnay/rust-toolchain@stable
       - run: RUSTDOCFLAGS="-D warnings" cargo doc
 
-  clippy:
-    name: Clippy
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          components: clippy
-      - uses: actions-rs/clippy-check@v1.0.7
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          args: --all-features
+  # clippy:
+  #   name: Clippy
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: dtolnay/rust-toolchain@stable
+  #       components: clippy
 
   format:
     name: Cargo Fmt
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          components: rustfmt
+      - uses: dtolnay/rust-toolchain@stable
+        components: rustfmt
       - run: cargo fmt -- --check
 
   release:
@@ -85,9 +69,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
+      - uses: dtolnay/rust-toolchain@stable
       - run: cargo publish --token ${CRATES_IO_TOKEN}
         env:
           CRATES_IO_TOKEN: ${{ secrets.CRATES_IO_TOKEN }}
