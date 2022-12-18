@@ -51,7 +51,8 @@ jobs:
   #   steps:
   #     - uses: actions/checkout@v3
   #     - uses: dtolnay/rust-toolchain@stable
-  #       components: clippy
+  #       with:
+  #         components: clippy
 
   format:
     name: Cargo Fmt
@@ -59,7 +60,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: dtolnay/rust-toolchain@stable
-        components: rustfmt
+        with:
+          components: rustfmt
       - run: cargo fmt -- --check
 
   release:
