@@ -1,0 +1,19 @@
+[package]
+name = "ads126x"
+version = "0.1.0"
+edition = "2021"
+description = "Platform-agnostic Rust driver for the ADS126x analog to digital coverters (ADC)."
+license = "MIT OR Apache-2.0"
+homepage = "https://github.com/Atmelfan/ads126x-rs"
+keywords = ["adc", "analog", "driver", "spi", "embedded-hal-driver"]
+categories = ["embedded", "hardware-support", "no-std"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+embedded-hal = {version = "0.2", features = ["unproven"]}
+bitfield = "0.14"
+
+[dev-dependencies]
+linux-embedded-hal = "0.3.2"
+clap = { version = "4", features = ["derive"] }
