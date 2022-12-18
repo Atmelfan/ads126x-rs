@@ -1,7 +1,7 @@
 #![no_std]
 use device::Ads126x;
 
-/// Commands to send 
+/// Commands to send
 mod commands;
 pub mod crc8;
 /// Generic ADS126x device drivers

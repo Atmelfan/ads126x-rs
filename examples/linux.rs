@@ -102,7 +102,6 @@ fn main() -> Result<(), std::io::Error> {
     let fscal = ads1263.read_fs_cal1().unwrap();
     dbg!(ofcal, fscal);
 
-
     for ch in &args.channels {
         // Configure mux
         let mux = if let Some((inp, inn)) = ch.split_once(':') {

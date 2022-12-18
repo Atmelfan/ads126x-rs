@@ -5,7 +5,10 @@ use embedded_hal::{
     digital::v2::OutputPin,
 };
 
-use crate::{commands::Command, registers::{ADC2OFC0, ADC2FSC0}};
+use crate::{
+    commands::Command,
+    registers::{ADC2FSC0, ADC2OFC0},
+};
 
 use super::{Ads126x, Ads126xError, Data};
 
@@ -43,8 +46,7 @@ where
         self.read_data(Some(Command::RData1))
     }
 
-    pub fn read_offs_cal2(&mut self) -> Result<i16, Ads126xError<SpiErr, IoErr>>
-    {
+    pub fn read_offs_cal2(&mut self) -> Result<i16, Ads126xError<SpiErr, IoErr>> {
         let mut data = [Command::RReg.reg(ADC2OFC0), 0x01, 0x00, 0x00];
 
         self.cs.set_low().map_err(|e| Ads126xError::IoErr(e))?;
@@ -57,8 +59,7 @@ where
         Ok(value)
     }
 
-    pub fn read_fs_cal2(&mut self) -> Result<u16, Ads126xError<SpiErr, IoErr>>
-    {
+    pub fn read_fs_cal2(&mut self) -> Result<u16, Ads126xError<SpiErr, IoErr>> {
         let mut data = [Command::RReg.reg(ADC2FSC0), 0x01, 0x00, 0x00];
 
         self.cs.set_low().map_err(|e| Ads126xError::IoErr(e))?;

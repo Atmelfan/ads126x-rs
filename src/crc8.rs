@@ -18,9 +18,9 @@ pub fn crc_8_atm(data: &[u8]) -> u8 {
             if (crc >> 7) ^ (byte & 0x01) != 0 {
                 crc = (crc << 1) ^ CRC8_ATM_POLY;
             } else {
-                crc = crc << 1;
+                crc <<= 1;
             }
-            byte = byte >> 1;
+            byte >>= 1;
         }
     }
 

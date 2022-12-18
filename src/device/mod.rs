@@ -2,7 +2,7 @@ use core::marker::PhantomData;
 
 use crate::commands::Command;
 use crate::crc8::{checksum, crc_8_atm};
-use crate::registers::{Interface, Register, OFCAL0, FSCAL0};
+use crate::registers::{Interface, Register, FSCAL0, OFCAL0};
 
 use bitfield::bitfield;
 use embedded_hal::{
@@ -113,7 +113,7 @@ where
     }
 
     /// Read register from device
-    /// 
+    ///
     pub fn read_reg<REG>(&mut self) -> Result<REG, Ads126xError<SpiErr, IoErr>>
     where
         REG: Register,
@@ -129,7 +129,7 @@ where
     }
 
     /// Write register to device
-    /// 
+    ///
     pub fn write_reg<REG>(&mut self, reg: REG) -> Result<(), Ads126xError<SpiErr, IoErr>>
     where
         REG: Register,
@@ -271,14 +271,13 @@ where
     }
 
     /// Read data directly from ADC1
-    /// 
+    ///
     /// **NOTE:** This is only valid if DRDY has been asserted low after a conversion being started.
     pub fn read_direct(&mut self) -> Result<Data, Ads126xError<SpiErr, IoErr>> {
         self.read_data(None)
     }
 
-    pub fn read_offs_cal1(&mut self) -> Result<i32, Ads126xError<SpiErr, IoErr>>
-    {
+    pub fn read_offs_cal1(&mut self) -> Result<i32, Ads126xError<SpiErr, IoErr>> {
         let mut data = [Command::RReg.reg(OFCAL0), 0x02, 0x00, 0x00, 0x00];
 
         self.cs.set_low().map_err(|e| Ads126xError::IoErr(e))?;
@@ -291,8 +290,7 @@ where
         Ok(value)
     }
 
-    pub fn read_fs_cal1(&mut self) -> Result<u32, Ads126xError<SpiErr, IoErr>>
-    {
+    pub fn read_fs_cal1(&mut self) -> Result<u32, Ads126xError<SpiErr, IoErr>> {
         let mut data = [Command::RReg.reg(FSCAL0), 0x02, 0x00, 0x00, 0x00];
 
         self.cs.set_low().map_err(|e| Ads126xError::IoErr(e))?;
@@ -304,5 +302,4 @@ where
         let value = (data[2] as u32) | (data[3] as u32) << 8 | (data[4] as u32) << 16;
         Ok(value)
     }
-
 }

@@ -1,6 +1,6 @@
 //#![allow(dead_code)]// Allow unused register definitions not supported yet
 
-use bitfield::{bitfield, BitMut, Bit};
+use bitfield::{bitfield, Bit, BitMut};
 
 pub(crate) const ID: u8 = 0x00;
 pub(crate) const POWER: u8 = 0x01;
@@ -34,7 +34,7 @@ pub trait Register {
     const REG: u8;
 
     fn from_byte(b: u8) -> Self;
-    fn into_byte(&self) -> u8;
+    fn into_byte(self) -> u8;
 }
 
 macro_rules! impl_register {
@@ -55,7 +55,7 @@ macro_rules! impl_register {
                 Self(b)
             }
 
-            fn into_byte(&self) -> u8 {
+            fn into_byte(self) -> u8 {
                 self.0
             }
         }
